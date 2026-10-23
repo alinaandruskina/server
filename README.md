@@ -11,3 +11,6 @@ make
 git add .
 git commit -m ""
 git push
+Открытие журнала:
+cd ~/server_project/build
+cat server.log
