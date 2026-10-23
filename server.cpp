@@ -4,19 +4,19 @@
 #include <cmath>
 #include <limits>
 #include <ctime>
-#include <csignal>     // Для перехвата Ctrl+C
+#include <csignal>     
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 
-// Глобальная переменная для перехвата сигнала
+
 Server* global_server = nullptr;
 
-// Функция, которая вызывается при нажатии Ctrl+C
+
 void signalHandler(int signum) {
     if (global_server) {
-        global_server->stop(); // Вызываем остановку
+        global_server->stop();
     }
 }
 
@@ -93,9 +93,9 @@ double Server::calculateSum(double* arr, int size) {
     return sum;
 }
 
-// Функция остановки сервера
+
 void Server::stop() {
-    if (!isRunning) return; // Если уже останавливаемся, не повторяем
+    if (!isRunning) return; 
     isRunning = false;
     
     writeLog("Получен сигнал завершения. Закрываем порт...");
@@ -111,7 +111,7 @@ void Server::stop() {
 }
 
 void Server::start() {
-    // Привязываем Ctrl+C к нашей функции signalHandler
+    
     signal(SIGINT, signalHandler);
 
     log_file.open(params.log_file, std::ios::app);
@@ -139,7 +139,7 @@ void Server::start() {
     while (isRunning) {
         int client_socket = accept(server_socket, nullptr, nullptr);
         if (client_socket < 0) {
-            if (!isRunning) break; // Если accept прервался из-за остановки
+            if (!isRunning) break; 
             continue;
         }
 
