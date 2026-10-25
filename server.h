@@ -1,8 +1,8 @@
 #pragma once
-#include <csignal>
 #include <string>
 #include <map>
-#include <fstream> 
+#include <fstream>
+#include <csignal>
 #include <boost/program_options.hpp>
 #include "auth.h"
 
@@ -20,10 +20,11 @@ private:
     Auth auth;
     std::map<std::string, std::string> db;
     int server_socket;
-    std::ofstream log_file; 
+    std::ofstream log_file;
     bool isRunning;
-    
-    void writeLog(const std::string& msg); // ДОБАВИТЬ: функция записи
+    bool isOverflow; 
+
+    void writeLog(const std::string& msg);
     void loadDatabase();
     std::string recvString(int client_sock);
     void sendString(int client_sock, const std::string& msg);
