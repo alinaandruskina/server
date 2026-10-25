@@ -4,15 +4,12 @@
 #include <cmath>
 #include <limits>
 #include <ctime>
-#include <csignal>     
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 
-
 Server* global_server = nullptr;
-
 
 void signalHandler(int signum) {
     if (global_server) {
@@ -20,7 +17,7 @@ void signalHandler(int signum) {
     }
 }
 
-Server::Server() : server_socket(-1), isRunning(true) {
+Server::Server() : server_socket(-1), isRunning(true), isOverflow(false) {
     global_server = this;
 }
 
@@ -33,7 +30,7 @@ void Server::writeLog(const std::string& msg) {
     if (!log_file.is_open()) return;
     std::time_t now = std::time(nullptr);
     char time_str[100];
-    std::strftime(time_str, sizeof(time_str), "%H:%M:%S %d-%m-%Y", std::localtime(&now));
+    std::strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", std::localtime(&now));
     log_file << "[" << time_str << "] " << msg << std::endl;
     log_file.flush();
 }
@@ -84,15 +81,16 @@ void Server::sendString(int client_sock, const std::string& msg) {
 
 double Server::calculateSum(double* arr, int size) {
     double sum = 0.0;
+    isOverflow = false; 
     for (int i = 0; i < size; i++) {
         sum += arr[i];
         if (std::isinf(sum)) {
+            isOverflow = true;
             return sum > 0 ? std::numeric_limits<double>::infinity() : -std::numeric_limits<double>::infinity();
         }
     }
     return sum;
 }
-
 
 void Server::stop() {
     if (!isRunning) return; 
@@ -100,19 +98,18 @@ void Server::stop() {
     
     writeLog("Получен сигнал завершения. Закрываем порт...");
     if (server_socket != -1) {
-        close(server_socket); // Закрываем сетевой порт
+        close(server_socket); 
         server_socket = -1;
     }
     writeLog("Соединение разорвано, порт закрыт. Сервер остановлен.");
     log_file.close();
     
     std::cout << "\nСервер остановлен. Порт закрыт." << std::endl;
-    exit(0); // Принудительно завершаем программу
+    exit(0); 
 }
 
 void Server::start() {
-    
-    signal(SIGINT, signalHandler);
+    signal(SIGINT, signalHandler); 
 
     log_file.open(params.log_file, std::ios::app);
     writeLog("Сервер запускается...");
@@ -186,6 +183,11 @@ void Server::start() {
                 
                 double result = calculateSum(vec, S);
                 delete[] vec;
+                
+                if (isOverflow) {
+                    writeLog("Внимание: переполнение при подсчете вектора! Результат: " + std::to_string(result));
+                }
+                
                 send(client_socket, &result, sizeof(result), 0);
             }
             writeLog("Обработано векторов: " + std::to_string(N));
