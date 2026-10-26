@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/server.dir/link.d CMakeFiles/server.dir/main.cpp.o CMakeFiles/server.dir/server.cpp.o CMakeFiles/server.dir/auth.cpp.o -o server  /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.83.0 /usr/lib/x86_64-linux-gnu/libcrypto++.so -lpthread

@@ -12,9 +12,8 @@
 Server* global_server = nullptr;
 
 void signalHandler(int signum) {
-    if (global_server) {
-        global_server->stop();
-    }
+    (void)signum;
+    if (global_server) global_server->stop();
 }
 
 Server::Server() : server_socket(-1), isRunning(true), isOverflow(false) {
@@ -36,21 +35,13 @@ void Server::writeLog(const std::string& msg) {
 }
 
 bool Server::parseArgs(int argc, char** argv) {
-    po::options_description desc("Параметры");
-    desc.add_options()
-        ("help,h", "Справка")
-        ("port,p", po::value<int>(&params.port)->required(), "Порт")
-        ("auth,a", po::value<std::string>(&params.auth_file)->required(), "Файл базы")
-        ("log,l", po::value<std::string>(&params.log_file)->default_value("server.log"), "Файл лога");
+    params.port = 33333; 
+    params.auth_file = "clients.conf";
+    params.log_file = "server.log";
 
-    po::variables_map vm;
-    try {
-        po::store(po::parse_command_line(argc, argv, desc), vm);
-        if (vm.count("help")) { std::cout << desc << "\n"; return false; }
-        po::notify(vm);
-    } catch (std::exception& e) {
-        std::cerr << "Ошибка параметров: " << e.what() << "\n";
-        return false;
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--run") continue;
     }
     return true;
 }
@@ -81,7 +72,7 @@ void Server::sendString(int client_sock, const std::string& msg) {
 
 double Server::calculateSum(double* arr, int size) {
     double sum = 0.0;
-    isOverflow = false; 
+    isOverflow = false;
     for (int i = 0; i < size; i++) {
         sum += arr[i];
         if (std::isinf(sum)) {
@@ -95,15 +86,10 @@ double Server::calculateSum(double* arr, int size) {
 void Server::stop() {
     if (!isRunning) return; 
     isRunning = false;
-    
     writeLog("Получен сигнал завершения. Закрываем порт...");
-    if (server_socket != -1) {
-        close(server_socket); 
-        server_socket = -1;
-    }
+    if (server_socket != -1) { close(server_socket); server_socket = -1; }
     writeLog("Соединение разорвано, порт закрыт. Сервер остановлен.");
     log_file.close();
-    
     std::cout << "\nСервер остановлен. Порт закрыт." << std::endl;
     exit(0); 
 }
@@ -113,7 +99,6 @@ void Server::start() {
 
     log_file.open(params.log_file, std::ios::app);
     writeLog("Сервер запускается...");
-
     loadDatabase();
     writeLog("База загрузилась, пользователей: " + std::to_string(db.size()));
 
@@ -129,19 +114,14 @@ void Server::start() {
     if (bind(server_socket, (sockaddr*)&addr, sizeof(addr)) < 0) throw std::runtime_error("Ошибка bind");
     if (listen(server_socket, 5) < 0) throw std::runtime_error("Ошибка listen");
 
-    std::cout << "Сервер запущен на порту " << params.port << std::endl;
-    std::cout << "Для остановки нажмите Ctrl+C" << std::endl;
-    writeLog("Сервер открыл порт " + std::to_string(params.port) + " и слушает");
+    std::cout << "Сервер запущен на порту " << params.port << " (Тип: double)" << std::endl;
+    writeLog("Сервер открыл порт " + std::to_string(params.port));
 
     while (isRunning) {
         int client_socket = accept(server_socket, nullptr, nullptr);
-        if (client_socket < 0) {
-            if (!isRunning) break; 
-            continue;
-        }
+        if (client_socket < 0) { if (!isRunning) break; continue; }
 
         writeLog("Пользователь подключился");
-
         try {
             std::string login = recvString(client_socket);
             
@@ -149,7 +129,7 @@ void Server::start() {
                 sendString(client_socket, "ERR");
                 writeLog("Ошибка: Неверный логин " + login);
                 close(client_socket); 
-                writeLog("Пользователь отключился");
+                writeLog("Пользователь отключился"); 
                 continue;
             }
 
@@ -161,7 +141,7 @@ void Server::start() {
                 sendString(client_socket, "ERR");
                 writeLog("Ошибка: Неверный пароль для " + login);
                 close(client_socket); 
-                writeLog("Пользователь отключился");
+                writeLog("Пользователь отключился"); 
                 continue;
             }
 
@@ -177,25 +157,20 @@ void Server::start() {
                 
                 double* vec = new double[S];
                 if (recv(client_socket, vec, S * sizeof(double), 0) <= 0) {
-                    delete[] vec;
+                    delete[] vec; 
                     throw std::runtime_error("Ошибка чтения вектора");
                 }
                 
                 double result = calculateSum(vec, S);
                 delete[] vec;
                 
-                if (isOverflow) {
-                    writeLog("Внимание: переполнение при подсчете вектора! Результат: " + std::to_string(result));
-                }
-                
+                if (isOverflow) writeLog("Внимание: переполнение! Результат: " + std::to_string(result));
                 send(client_socket, &result, sizeof(result), 0);
             }
             writeLog("Обработано векторов: " + std::to_string(N));
-            
         } catch (std::exception& e) {
             writeLog(std::string("Ошибка при обслуживании: ") + e.what());
         }
-        
         close(client_socket);
         writeLog("Пользователь отключился");
     }

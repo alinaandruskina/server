@@ -3,10 +3,7 @@
 #include <map>
 #include <fstream>
 #include <csignal>
-#include <boost/program_options.hpp>
 #include "auth.h"
-
-namespace po = boost::program_options;
 
 struct Params {
     int port;
@@ -22,7 +19,7 @@ private:
     int server_socket;
     std::ofstream log_file;
     bool isRunning;
-    bool isOverflow; 
+    bool isOverflow;
 
     void writeLog(const std::string& msg);
     void loadDatabase();
