@@ -1,0 +1,8 @@
+build/
+*.o
+*.log
+server_static
+dumb_client/
+dumb_client.zip
+client_double
+clients.conf
