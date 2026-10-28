@@ -26,29 +26,72 @@ Server::~Server() {
 }
 
 void Server::writeLog(const std::string& msg) {
-    if (!log_file.is_open()) return;
-    std::time_t now = std::time(nullptr);
-    char time_str[100];
-    std::strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", std::localtime(&now));
-    log_file << "[" << time_str << "] " << msg << std::endl;
-    log_file.flush();
+    std::cout << msg << std::endl;
+    if (log_file.is_open()) {
+        log_file << msg << std::endl;
+        log_file.flush();
+    }
+}
+
+void Server::printUsage() {
+    std::cout << "Сервер vcalc - серверная программа для клиент-серверной системы обработки данных\n\n";
+    std::cout << "Использование: vcalc_server [options]\n\n";
+    std::cout << "Параметры:\n";
+    std::cout << "  -h [ --help ]         Вывод справки\n";
+    std::cout << "  -d [ --db-file ] arg  Имя файла с базой клиентов (по умолчанию ./vcalc.conf)\n";
+    std::cout << "  -l [ --log-file ] arg Имя файла с журналом работы (по умолчанию ./vcalc.log)\n";
+    std::cout << "  -p [ --port ] arg     Номер порта сервера (по умолчанию 33333)\n";
 }
 
 bool Server::parseArgs(int argc, char** argv) {
     params.port = 33333; 
-    params.auth_file = "clients.conf";
-    params.log_file = "server.log";
+    params.auth_file = "vcalc.conf";
+    params.log_file = "vcalc.log";
+
+    if (argc == 1) {
+        printUsage();
+        return false;
+    }
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
-        if (arg == "--run") continue;
+        if (arg == "-h" || arg == "--help") {
+            printUsage();
+            return false;
+        } 
+        else if (arg == "-d" || arg == "--db-file") {
+            if (i + 1 < argc) params.auth_file = argv[++i];
+        } 
+        else if (arg == "-l" || arg == "--log-file") {
+            if (i + 1 < argc) params.log_file = argv[++i];
+        } 
+        else if (arg == "-p" || arg == "--port") {
+            if (i + 1 < argc) params.port = std::stoi(argv[++i]);
+        }
+        else if (arg == "--run") continue;
+        else if (arg == "-T" || arg == "-H" || arg == "-S") i++; // Для клиента препода
     }
     return true;
 }
 
+void Server::createDefaultDatabase() {
+    std::ofstream file(params.auth_file);
+    if (file.is_open()) {
+        file << "user:P@ssW0rd\n";
+        file << "ibst128:SupErP@$$w0rd\n";
+        file.close();
+        std::cout << "log: Создан файл базы по умолчанию: " << params.auth_file << std::endl;
+    }
+}
+
 void Server::loadDatabase() {
     std::ifstream file(params.auth_file);
-    if (!file.is_open()) throw std::runtime_error("Не могу открыть файл базы!");
+    if (!file.is_open()) {
+        createDefaultDatabase();
+        file.open(params.auth_file);
+    }
+    if (!file.is_open()) throw std::runtime_error("Не могу открыть или создать файл базы!");
+
     std::string line;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
@@ -86,11 +129,9 @@ double Server::calculateSum(double* arr, int size) {
 void Server::stop() {
     if (!isRunning) return; 
     isRunning = false;
-    writeLog("Получен сигнал завершения. Закрываем порт...");
+    writeLog("log: Server stopped by signal 2");
     if (server_socket != -1) { close(server_socket); server_socket = -1; }
-    writeLog("Соединение разорвано, порт закрыт. Сервер остановлен.");
-    log_file.close();
-    std::cout << "\nСервер остановлен. Порт закрыт." << std::endl;
+    if (log_file.is_open()) log_file.close();
     exit(0); 
 }
 
@@ -98,9 +139,10 @@ void Server::start() {
     signal(SIGINT, signalHandler); 
 
     log_file.open(params.log_file, std::ios::app);
-    writeLog("Сервер запускается...");
+    writeLog("log: Select variant double:SHA1:server");
+    writeLog("log: digest size: 20");
+    
     loadDatabase();
-    writeLog("База загрузилась, пользователей: " + std::to_string(db.size()));
 
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     int opt = 1;
@@ -114,46 +156,49 @@ void Server::start() {
     if (bind(server_socket, (sockaddr*)&addr, sizeof(addr)) < 0) throw std::runtime_error("Ошибка bind");
     if (listen(server_socket, 5) < 0) throw std::runtime_error("Ошибка listen");
 
-    std::cout << "Сервер запущен на порту " << params.port << " (Тип: double)" << std::endl;
-    writeLog("Сервер открыл порт " + std::to_string(params.port));
-
     while (isRunning) {
         int client_socket = accept(server_socket, nullptr, nullptr);
         if (client_socket < 0) { if (!isRunning) break; continue; }
 
-        writeLog("Пользователь подключился");
         try {
             std::string login = recvString(client_socket);
+            writeLog("log: received USERNAME " + login);
             
             if (db.find(login) == db.end()) {
                 sendString(client_socket, "ERR");
-                writeLog("Ошибка: Неверный логин " + login);
+                writeLog("log: username fail");
                 close(client_socket); 
-                writeLog("Пользователь отключился"); 
                 continue;
             }
+            writeLog("log: username ok");
 
             std::string salt = auth.generateSalt();
             sendString(client_socket, salt);
+            writeLog("log: sending SALT " + salt);
+            
             std::string client_hash = recvString(client_socket);
+            writeLog("log: received MESSAGE " + client_hash);
             
             if (!auth.verifyHash(client_hash, salt, db[login])) {
                 sendString(client_socket, "ERR");
-                writeLog("Ошибка: Неверный пароль для " + login);
+                writeLog("log: auth fail");
                 close(client_socket); 
-                writeLog("Пользователь отключился"); 
                 continue;
             }
 
             sendString(client_socket, "OK");
-            writeLog("Успешная аутентификация: " + login);
+            writeLog("log: auth success, sending OK");
+            writeLog("log: Start calculate with type d");
 
             uint32_t N;
             if (recv(client_socket, &N, sizeof(N), 0) <= 0) throw std::runtime_error("Ошибка чтения N");
+            writeLog("log: Numbers of vectors " + std::to_string(N));
             
             for (uint32_t i = 0; i < N; i++) {
                 uint32_t S;
                 if (recv(client_socket, &S, sizeof(S), 0) <= 0) throw std::runtime_error("Ошибка чтения S");
+                
+                writeLog("log: Vector " + std::to_string(i) + " size " + std::to_string(S));
                 
                 double* vec = new double[S];
                 if (recv(client_socket, vec, S * sizeof(double), 0) <= 0) {
@@ -161,17 +206,21 @@ void Server::start() {
                     throw std::runtime_error("Ошибка чтения вектора");
                 }
                 
+                std::string vec_str = "log: Vector values: ";
+                for(uint32_t j=0; j<S; j++) vec_str += std::to_string(vec[j]) + " ";
+                writeLog(vec_str);
+
                 double result = calculateSum(vec, S);
                 delete[] vec;
                 
-                if (isOverflow) writeLog("Внимание: переполнение! Результат: " + std::to_string(result));
+                writeLog("log: Sended vector summ " + std::to_string(result));
                 send(client_socket, &result, sizeof(result), 0);
             }
-            writeLog("Обработано векторов: " + std::to_string(N));
         } catch (std::exception& e) {
-            writeLog(std::string("Ошибка при обслуживании: ") + e.what());
+            writeLog(std::string("log: Error: ") + e.what());
         }
         close(client_socket);
-        writeLog("Пользователь отключился");
+        writeLog("log: Connection close");
+        writeLog("======================");
     }
 }

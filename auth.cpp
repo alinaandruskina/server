@@ -4,7 +4,7 @@
 #include <cryptopp/osrng.h>
 
 std::string Auth::generateSalt() {
-    CryptoPP::byte salt[8]; 
+    CryptoPP::byte salt[8];
     CryptoPP::AutoSeededRandomPool prng;
     prng.GenerateBlock(salt, sizeof(salt));
 

@@ -23,9 +23,11 @@ private:
 
     void writeLog(const std::string& msg);
     void loadDatabase();
+    void createDefaultDatabase();
     std::string recvString(int client_sock);
     void sendString(int client_sock, const std::string& msg);
     double calculateSum(double* arr, int size);
+    void printUsage();
 
 public:
     Server();
