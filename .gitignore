@@ -1,8 +1,13 @@
-build/
+# Скомпилированные файлы и объектники
 *.o
+vcalc_server
+tests
+
+# Логи и конфиги с паролями
 *.log
-server_static
-dumb_client/
-dumb_client.zip
-client_double
+vcalc.conf
 clients.conf
+
+# Папки сборки
+build/
+
