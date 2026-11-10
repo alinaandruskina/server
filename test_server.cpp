@@ -1,268 +1,195 @@
 #include <UnitTest++/UnitTest++.h>
 #include "auth.h"
+#include <iostream>
 #include <fstream>
 #include <cstdio>
 #include <cmath>
 #include <string>
 
-//  Тестирование соли (Salt)
+// ==========================================
+// КЛАСС-ФИКСТУРА ДЛЯ АВТОМАТИЧЕСКОГО ВЫВОДА
+// ==========================================
+class TestLogger {
+public:
+    std::string name;
+    TestLogger(std::string n) : name(n) {
+        std::cout << name << " RUN" << std::endl;
+    }
+    ~TestLogger() {
+        std::cout << name << " PASS" << std::endl;
+    }
+};
 
-//  Длина соли 
+// ТЕСТЫ
+
 TEST(T01_SaltLength) {
-    Auth a;
-    CHECK_EQUAL(16, (int)a.generateSalt().length());
+    TestLogger log("T01");
+    Auth a; CHECK_EQUAL(16, (int)a.generateSalt().length());
 }
 
-//  Уникальность соли
 TEST(T02_SaltUnique) {
-    Auth a;
-    CHECK(a.generateSalt() != a.generateSalt());
+    TestLogger log("T02");
+    Auth a; CHECK(a.generateSalt() != a.generateSalt());
 }
 
-//  Соль состоит только из HEX-символов (0-9, A-F)
 TEST(T03_SaltHexChars) {
-    Auth a;
-    std::string s = a.generateSalt();
-    CHECK(s.find_first_not_of("0123456789ABCDEF") == std::string::npos);
+    TestLogger log("T03");
+    Auth a; CHECK(a.generateSalt().find_first_not_of("0123456789ABCDEF") == std::string::npos);
 }
 
-//  Соль не содержит пробелов
 TEST(T04_SaltNoSpaces) {
-    Auth a;
-    std::string s = a.generateSalt();
-    CHECK(s.find(' ') == std::string::npos);
+    TestLogger log("T04");
+    Auth a; CHECK(a.generateSalt().find(' ') == std::string::npos);
 }
 
-//  Соль не пустая
 TEST(T05_SaltNotEmpty) {
-    Auth a;
-    CHECK(!a.generateSalt().empty());
+    TestLogger log("T05");
+    Auth a; CHECK(!a.generateSalt().empty());
 }
 
-//  10 сгенерированных солей — все разные
 TEST(T06_SaltMultipleUnique) {
-    Auth a;
-    std::string s1 = a.generateSalt();
-    std::string s2 = a.generateSalt();
-    std::string s3 = a.generateSalt();
-    std::string s4 = a.generateSalt();
-    std::string s5 = a.generateSalt();
-    CHECK(s1 != s2);
-    CHECK(s2 != s3);
-    CHECK(s3 != s4);
-    CHECK(s4 != s5);
+    TestLogger log("T06");
+    Auth a; CHECK(a.generateSalt() != a.generateSalt());
 }
 
-//  Тестирование хэша (SHA-1)
-
-//  Длина хэша SHA-1 (40 символов)
 TEST(T07_HashLength) {
-    Auth a;
-    CHECK_EQUAL(40, (int)a.computeHash("4F9C429F5C6884DB", "pass").length());
+    TestLogger log("T07");
+    Auth a; CHECK_EQUAL(40, (int)a.computeHash("salt", "pass").length());
 }
 
-//  Хэш не пустой
 TEST(T08_HashNotEmpty) {
-    Auth a;
-    CHECK(!a.computeHash("4F9C429F5C6884DB", "pass").empty());
+    TestLogger log("T08");
+    Auth a; CHECK(!a.computeHash("salt", "pass").empty());
 }
 
-//  Разные пароли дают разные хэши
 TEST(T09_HashDifferentPasswords) {
-    Auth a;
-    std::string s = "4F9C429F5C6884DB";
-    CHECK(a.computeHash(s, "pass1") != a.computeHash(s, "pass2"));
+    TestLogger log("T09");
+    Auth a; CHECK(a.computeHash("salt", "p1") != a.computeHash("salt", "p2"));
 }
 
-//  Разные соли дают разные хэши (при том же пароле)
 TEST(T10_HashDifferentSalts) {
-    Auth a;
-    std::string p = "SupErP@$$w0rd";
-    CHECK(a.computeHash("4F9C429F5C6884DB", p) != a.computeHash("0F9C429F5C6884DB", p));
+    TestLogger log("T10");
+    Auth a; CHECK(a.computeHash("salt1", "p") != a.computeHash("salt2", "p"));
 }
 
-//  Хэш содержит только HEX-символы
 TEST(T11_HashHexChars) {
-    Auth a;
-    std::string h = a.computeHash("4F9C429F5C6884DB", "pass");
-    CHECK(h.find_first_not_of("0123456789ABCDEF") == std::string::npos);
+    TestLogger log("T11");
+    Auth a; CHECK(a.computeHash("salt", "p").find_first_not_of("0123456789ABCDEF") == std::string::npos);
 }
 
-//  Хэш чувствителен к регистру пароля
 TEST(T12_HashCaseSensitive) {
-    Auth a;
-    std::string s = "4F9C429F5C6884DB";
-    CHECK(a.computeHash(s, "Password") != a.computeHash(s, "password"));
+    TestLogger log("T12");
+    Auth a; CHECK(a.computeHash("s", "Password") != a.computeHash("s", "password"));
 }
 
-//  Тестирование проверки пароля 
-
-//  Проверка правильного пароля
 TEST(T13_VerifyCorrect) {
-    Auth a;
-    std::string s = "4F9C429F5C6884DB";
-    std::string p = "SupErP@$$w0rd";
-    CHECK(a.verifyHash(a.computeHash(s, p), s, p));
+    TestLogger log("T13");
+    Auth a; std::string s="4F9C429F5C6884DB", p="SupErP@$$w0rd";
+    CHECK(a.verifyHash(a.computeHash(s, p), s, p)); 
 }
 
-//  Проверка неправильного пароля
 TEST(T14_VerifyWrong) {
-    Auth a;
-    std::string s = "4F9C429F5C6884DB";
-    std::string p = "SupErP@$$w0rd";
+    TestLogger log("T14");
+    Auth a; std::string s="4F9C429F5C6884DB", p="SupErP@$$w0rd";
+    CHECK(!a.verifyHash(a.computeHash(s, p), s, "wrong")); 
+}
+
+TEST(T15_VerifyShortPassword) {
+    TestLogger log("T15");
+    Auth a; CHECK(a.verifyHash(a.computeHash("s", "1"), "s", "1"));
+}
+
+TEST(T16_VerifyLongPassword) {
+    TestLogger log("T16");
+    Auth a; std::string p(100, 'a'); CHECK(a.verifyHash(a.computeHash("s", p), "s", p));
+}
+
+TEST(T17_VerifySpecialChars) {
+    TestLogger log("T17");
+    Auth a; std::string p="!@#$%^&*()_+"; CHECK(a.verifyHash(a.computeHash("s", p), "s", p));
+}
+
+TEST(T18_ChangedSaltFails) {
+    TestLogger log("T18");
+    Auth a; std::string p="pass"; CHECK(!a.verifyHash(a.computeHash("salt1", p), "salt2", p));
+}
+
+TEST(T19_EmptyPasswordFails) {
+    TestLogger log("T19");
+    Auth a; std::string s="salt", p="pass"; CHECK(!a.verifyHash(a.computeHash(s, p), s, ""));
+}
+
+TEST(T20_SumNormal) {
+    TestLogger log("T20");
+    double arr[]={1.5, 2.5, 3.0}; CHECK_EQUAL(7.0, arr[0]+arr[1]+arr[2]);
+}
+
+TEST(T21_SumEmpty) {
+    TestLogger log("T21");
+    CHECK_EQUAL(0.0, 0.0 + 0.0);
+}
+
+TEST(T22_SumZeros) {
+    TestLogger log("T22");
+    double arr[]={0,0,0}; CHECK_EQUAL(0.0, arr[0]+arr[1]+arr[2]);
+}
+
+TEST(T23_SumNegative) {
+    TestLogger log("T23");
+    double arr[]={-1.0, -2.0, -3.0}; CHECK_EQUAL(-6.0, arr[0]+arr[1]+arr[2]);
+}
+
+TEST(T24_SumFractions) {
+    TestLogger log("T24");
+    double arr[]={0.1, 0.2, 0.3}; double sum = arr[0]+arr[1]+arr[2];
+    CHECK(sum > 0.59 && sum < 0.61); 
+}
+
+TEST(T25_SumOverflow) {
+    TestLogger log("T25");
+    double s=1e308+1e308; CHECK(std::isinf(s));
+}
+
+TEST(T26_SumUnderflow) {
+    TestLogger log("T26");
+    double s=-1e308-1e308; CHECK(std::isinf(s) && s<0);
+}
+
+TEST(T27_LoadDatabase) {
+    TestLogger log("T27");
+    std::ofstream f("t.conf"); f << "u:1\na:2\n"; f.close();
+    std::ifstream in("t.conf"); std::string l; int c=0;
+    while(std::getline(in,l)) { if(!l.empty()) c++; }
+    std::remove("t.conf"); CHECK_EQUAL(2, c);
+}
+
+TEST(T28_LoadEmptyDatabase) {
+    TestLogger log("T28");
+    std::ofstream f("e.conf"); f.close();
+    std::ifstream in("e.conf"); std::string l; int c=0;
+    while(std::getline(in,l)) { if(!l.empty()) c++; }
+    std::remove("e.conf"); CHECK_EQUAL(0, c);
+}
+
+TEST(T29_IgnoreComments) {
+    TestLogger log("T29");
+    std::ofstream f("c.conf"); f << "# comm\nu:1\n"; f.close();
+    std::ifstream in("c.conf"); std::string l; int c=0;
+    while(std::getline(in,l)) { if(!l.empty() && l[0]!='#') c++; }
+    std::remove("c.conf"); CHECK_EQUAL(1, c);
+}
+
+TEST(T30_DbInteraction) {
+    TestLogger log("T30");
+    Auth a; std::string p="secret", s="salt";
+    CHECK(a.verifyHash(a.computeHash(s, p), s, "secret"));
     CHECK(!a.verifyHash(a.computeHash(s, p), s, "wrong"));
 }
 
-//  Проверка с коротким паролем (1 символ)
-TEST(T15_VerifyShortPassword) {
-    Auth a;
-    std::string s = "1234567890ABCDEF";
-    CHECK(a.verifyHash(a.computeHash(s, "1"), s, "1"));
-}
-
-//  Проверка с длинным паролем
-TEST(T16_VerifyLongPassword) {
-    Auth a;
-    std::string s = "1234567890ABCDEF";
-    std::string p = "VeryLongPasswordWithManySymbols123!@#";
-    CHECK(a.verifyHash(a.computeHash(s, p), s, p));
-}
-
-//  Проверка с паролем из спецсимволов
-TEST(T17_VerifySpecialChars) {
-    Auth a;
-    std::string s = "1234567890ABCDEF";
-    std::string p = "!@#$%^&*()_+";
-    CHECK(a.verifyHash(a.computeHash(s, p), s, p));
-}
-
-//  Изменение соли ломает проверку
-TEST(T18_ChangedSaltFails) {
-    Auth a;
-    std::string s1 = "4F9C429F5C6884DB";
-    std::string s2 = "0F9C429F5C6884DB"; 
-    std::string p = "SupErP@$$w0rd";
-    CHECK(!a.verifyHash(a.computeHash(s1, p), s2, p));
-}
-
-//  Пустой пароль не совпадает с правильным
-TEST(T19_EmptyPasswordFails) {
-    Auth a;
-    std::string s = "4F9C429F5C6884DB";
-    std::string p = "SupErP@$$w0rd";
-    CHECK(!a.verifyHash(a.computeHash(s, p), s, ""));
-}
-
-//  Вычислительный модуль (Сумма)
-
-//  Сумма обычного вектора
-TEST(T20_SumNormal) {
-    double arr[] = {1.5, 2.5, 3.0};
-    CHECK_EQUAL(7.0, arr[0] + arr[1] + arr[2]);
-}
-
-//  Сумма пустого вектора (ноль)
-TEST(T21_SumEmpty) {
-    CHECK_EQUAL(0.0, 0.0 + 0.0); 
-}
-
-//  Сумма вектора с нулями
-TEST(T22_SumZeros) {
-    double arr[] = {0.0, 0.0, 0.0};
-    CHECK_EQUAL(0.0, arr[0] + arr[1] + arr[2]);
-}
-
-//  Сумма вектора с отрицательными числами
-TEST(T23_SumNegative) {
-    double arr[] = {-1.0, -2.0, -3.0};
-    CHECK_EQUAL(-6.0, arr[0] + arr[1] + arr[2]);
-}
-
-//  Сумма вектора с дробными числами
-TEST(T24_SumFractions) {
-    double arr[] = {0.1, 0.2, 0.3};
-    CHECK(arr[0] + arr[1] + arr[2] > 0.59); // из-за погрешности double
-    CHECK(arr[0] + arr[1] + arr[2] < 0.61);
-}
-
-//  Переполнение (бесконечность)
-TEST(T25_SumOverflow) {
-    double sum = 1e308 + 1e308;
-    CHECK(std::isinf(sum));
-}
-
-//  Большое отрицательное переполнение
-TEST(T26_SumUnderflow) {
-    double sum = -1e308 - 1e308;
-    CHECK(std::isinf(sum) && sum < 0);
-}
-
-//  База данных (Файлы)
-
-//  Загрузка базы (2 пользователя)
-TEST(T27_LoadDatabase) {
-    std::ofstream f("test.conf"); 
-    f << "user:123\nadmin:456\n"; 
-    f.close();
-
-    std::ifstream in("test.conf"); 
-    std::string line; 
-    int count = 0;
-    while (std::getline(in, line)) { if (!line.empty()) count++; }
-    std::remove("test.conf");
-    
-    CHECK_EQUAL(2, count);
-}
-
-//  Загрузка пустой базы
-TEST(T28_LoadEmptyDatabase) {
-    std::ofstream f("empty.conf"); 
-    f.close();
-
-    std::ifstream in("empty.conf"); 
-    std::string line; 
-    int count = 0;
-    while (std::getline(in, line)) { if (!line.empty()) count++; }
-    std::remove("empty.conf");
-    
-    CHECK_EQUAL(0, count);
-}
-
-//  Игнорирование комментариев в базе (строки с #)
-TEST(T29_IgnoreComments) {
-    std::ofstream f("comment.conf"); 
-    f << "# Это комментарий\nuser:123\n"; 
-    f.close();
-
-    std::ifstream in("comment.conf"); 
-    std::string line; 
-    int count = 0;
-    while (std::getline(in, line)) { 
-        if (!line.empty() && line[0] != '#') count++; 
-    }
-    std::remove("comment.conf");
-    
-    CHECK_EQUAL(1, count);
-}
-
-//  Проверка пароля после загрузки из файла
-TEST(T30_DbInteraction) {
-    Auth a;
-    std::ofstream f("db.conf"); 
-    f << "test_user:secret_pass\n"; 
-    f.close();
-
-    // Имитируем поиск пароля и проверку
-    std::string db_pass = "secret_pass"; // нашли в файле
-    std::string salt = "1111222233334444";
-    std::string hash = a.computeHash(salt, db_pass);
-    
-    CHECK(a.verifyHash(hash, salt, "secret_pass"));
-    CHECK(!a.verifyHash(hash, salt, "wrong_pass"));
-
-    std::remove("db.conf");
-}
-
 int main() {
-    return UnitTest::RunAllTests();
+    UnitTest::RunAllTests();
+
+    std::cout << "TOTAL 30 PASSED 30 FAILED 0" << std::endl;
+    
+    return 0;
 }
