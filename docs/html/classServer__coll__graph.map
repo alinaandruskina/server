@@ -1,0 +1,7 @@
+<map id="Server" name="Server">
+<area shape="rect" id="Node000001" title="Основной класс TCP&#45;сервера." alt="" coords="19,173,208,539"/>
+<area shape="rect" id="Node000002" href="$structParams.html" title="Структура для хранения параметров сервера." alt="" coords="5,5,91,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,110,72,157,67,158,57,111"/>
+<area shape="rect" id="Node000003" href="$classAuth.html" title="Класс для реализации криптографической аутентификации." alt="" coords="115,5,245,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,111,160,158,155,157,166,110"/>
+</map>

@@ -1,3 +1,14 @@
+/**
+ * @file server.cpp
+ * @brief Реализация основного класса сервера.
+ * @details Содержит методы класса Server для работы с сетью, базой данных и вычислениями.
+ */
+
+
+
+
+
+
 #include "server.h"
 #include <iostream>
 #include <fstream>

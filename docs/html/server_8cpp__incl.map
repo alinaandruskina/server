@@ -1,0 +1,33 @@
+<map id="server.cpp" name="server.cpp">
+<area shape="rect" id="Node000001" title="Реализация основного класса сервера." alt="" coords="537,5,626,31"/>
+<area shape="rect" id="Node000002" href="$server_8h.html" title="Заголовочный файл основного класса сервера." alt="" coords="139,79,213,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="537,30,228,84,227,78,536,25"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="277,152,350,177"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="537,25,475,31,406,42,346,58,323,69,309,80,302,93,300,108,306,138,301,139,295,108,297,92,305,77,320,64,344,53,405,37,474,26,536,20"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="319,79,399,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="546,33,409,77,407,72,545,28"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="423,79,486,104"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="562,33,489,74,486,69,560,28"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="511,79,569,104"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="577,32,556,68,551,65,572,30"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="593,79,652,104"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="591,30,611,65,607,68,586,32"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="677,79,779,104"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="606,28,693,70,691,75,604,33"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="804,79,900,104"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="626,28,796,73,795,78,624,33"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="925,79,1017,104"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="627,25,912,76,911,81,626,30"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1041,79,1116,104"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="626,21,799,41,1028,76,1027,81,798,47,626,26"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="73,225,132,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,97,107,102,72,112,39,128,13,154,9,163,9,171,19,189,38,204,62,218,60,222,35,209,14,192,3,173,4,162,9,150,36,124,70,107,106,97,138,92"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="23,152,73,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="157,106,83,147,80,143,154,102"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="199,102,280,143,278,148,197,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="98,152,166,177"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="171,106,149,142,144,139,167,103"/>
+<area shape="rect" id="Node000007" href="$auth_8h.html" title="Заголовочный файл модуля аутентификации." alt="" coords="190,152,253,177"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="186,103,209,139,204,142,181,106"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="204,180,135,220,133,216,201,175"/>
+</map>

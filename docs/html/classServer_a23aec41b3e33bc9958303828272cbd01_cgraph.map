@@ -1,0 +1,5 @@
+<map id="Server::parseArgs" name="Server::parseArgs">
+<area shape="rect" id="Node000001" title="Разбирает параметры командной строки." alt="" coords="5,5,143,31"/>
+<area shape="rect" id="Node000002" href="$classServer.html#a4a9fb5830e81be05f60126c22b5850d6" title="Выводит справку по использованию программы." alt="" coords="191,5,333,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,15,177,15,177,21,143,21"/>
+</map>

@@ -1,0 +1,32 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title="Главная функция программы." alt="" coords="5,179,60,204"/>
+<area shape="rect" id="Node000002" href="$classServer.html#a23aec41b3e33bc9958303828272cbd01" title="Разбирает параметры командной строки." alt="" coords="108,80,245,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,176,144,111,147,116,54,181"/>
+<area shape="rect" id="Node000004" href="$classServer.html#a7eac07d2582fa01c2671362efa955b31" title="Запускает сервер." alt="" coords="125,203,228,228"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="61,193,112,202,111,207,60,198"/>
+<area shape="rect" id="Node000003" href="$classServer.html#a4a9fb5830e81be05f60126c22b5850d6" title="Выводит справку по использованию программы." alt="" coords="303,5,446,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,77,292,40,314,32,315,37,294,44,206,82"/>
+<area shape="rect" id="Node000005" href="$classServer.html#a09b1ec19b18d9f116cef45fb17c804ad" title="Вычисляет сумму элементов вектора." alt="" coords="295,55,455,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="184,201,226,147,257,116,292,89,303,83,306,88,295,94,260,120,230,150,189,204"/>
+<area shape="rect" id="Node000006" href="$classAuth.html#a0366a2d4069b0496a8a5b131f0be7df1" title="Генерирует случайную соль заданной длины." alt="" coords="303,104,446,129"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="193,200,236,170,292,138,309,131,311,136,294,143,239,174,196,205"/>
+<area shape="rect" id="Node000007" href="$classServer.html#a93eb4c2a422816205dd26bb1c2a15779" title="Загружает базу пользователей из файла." alt="" coords="293,153,456,179"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="228,200,309,179,310,185,229,205"/>
+<area shape="rect" id="Node000009" href="$classServer.html#afa9afc12945fa23f6296b5cbdfc5d60e" title="Принимает строку от клиента." alt="" coords="305,203,444,228"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="228,213,291,213,291,218,228,218"/>
+<area shape="rect" id="Node000010" href="$classServer.html#a42232945f6d50564729ca791303233ab" title="Отправляет строку клиенту." alt="" coords="304,252,445,277"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="229,225,310,246,309,251,228,231"/>
+<area shape="rect" id="Node000011" href="$server_8cpp.html#a8ee3282bc313e547dbbb8d4f4010db61" title=" " alt="" coords="319,301,431,327"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="197,226,240,256,294,286,314,294,312,299,292,291,237,260,194,230"/>
+<area shape="rect" id="Node000013" href="$classServer.html#a6e2876951e2574c1711bead30d7216f3" title="Записывает сообщение в консоль и лог&#45;файл." alt="" coords="775,327,903,352"/>
+<area shape="poly" id="edge15_Node000004_Node000013" title=" " alt="" coords="187,227,203,252,227,283,258,313,294,336,356,357,422,371,488,377,554,378,676,369,772,352,773,358,676,374,554,384,488,383,421,376,355,362,292,340,255,317,223,286,199,255,183,230"/>
+<area shape="rect" id="Node000014" href="$classAuth.html#ae6caf40df199d015ab956efcd136c381" title="Проверяет корректность хеша." alt="" coords="309,403,440,428"/>
+<area shape="poly" id="edge13_Node000004_Node000014" title=" " alt="" coords="186,227,225,299,257,343,295,381,317,395,314,399,292,385,252,346,220,302,181,229"/>
+<area shape="rect" id="Node000008" href="$classServer.html#a4fc6ed33ec06bc6d07dc3c15703d9a59" title="Создает файл базы данных по умолчанию." alt="" coords="504,153,727,179"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="457,163,490,163,490,169,457,169"/>
+<area shape="rect" id="Node000012" href="$classServer.html#a07c45a7e101a3926d8f9685c3c5d14e4" title="Останавливает сервер." alt="" coords="565,301,665,327"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="431,311,551,311,551,317,431,317"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="666,317,762,328,761,333,665,322"/>
+<area shape="rect" id="Node000015" href="$classAuth.html#a5fe9a8753164a3493bf0036f117ef5c7" title="Вычисляет хеш SHA&#45;1 от соединения соли и пароля." alt="" coords="540,403,691,428"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="440,413,526,413,526,418,440,418"/>
+</map>

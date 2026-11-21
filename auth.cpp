@@ -1,3 +1,9 @@
+/**
+ * @file auth.cpp
+ * @brief Реализация модуля аутентификации.
+ * @details Содержит методы класса Auth для работы с солью и хешами.
+ */
+
 #include "auth.h"
 #include <cryptopp/sha.h>
 #include <cryptopp/hex.h>

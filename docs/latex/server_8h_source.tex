@@ -1,0 +1,53 @@
+\doxysection{server.\+h}
+\hypertarget{server_8h_source}{}\label{server_8h_source}\mbox{\hyperlink{server_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <csignal>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{auth_8h}{auth.h}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structParams}{Params}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structParams_af2b6bf05246b2e046b8c107d441beac9}{port}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ std::string\ \mbox{\hyperlink{structParams_a89021a4fdb64cba4bf63f5c872d87c38}{auth\_file}};\ }
+\DoxyCodeLine{00022\ \ \ \ \ std::string\ \mbox{\hyperlink{structParams_a1a4a74e9ae4f575af965c9bf0f8f6673}{log\_file}};\ \ }
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classServer}{Server}}\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{structParams}{Params}}\ \mbox{\hyperlink{classServer_a6e730a027edd3122ad86752e0932f65a}{params}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{classAuth}{Auth}}\ \mbox{\hyperlink{classServer_ac3c32465fc995e2da0c39b2e8dce5413}{auth}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ std::map<std::string,\ std::string>\ \mbox{\hyperlink{classServer_a1f569e7330c9a2d3fc6b90ae9e241d48}{db}};\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classServer_a597fe0c56c29950a94d078d362fed51a}{server\_socket}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ std::ofstream\ \mbox{\hyperlink{classServer_af67e2448a4f053adca0b4d75986dd194}{log\_file}};\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classServer_aef65436a83f29e10214d13ab96792543}{isRunning}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classServer_a7b953622ed4ad53bed8ef64ffc720842}{isOverflow}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a6e2876951e2574c1711bead30d7216f3}{writeLog}}(\textcolor{keyword}{const}\ std::string\&\ msg);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a93eb4c2a422816205dd26bb1c2a15779}{loadDatabase}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a4fc6ed33ec06bc6d07dc3c15703d9a59}{createDefaultDatabase}}();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00075\ \ \ \ \ std::string\ \mbox{\hyperlink{classServer_afa9afc12945fa23f6296b5cbdfc5d60e}{recvString}}(\textcolor{keywordtype}{int}\ client\_sock);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a42232945f6d50564729ca791303233ab}{sendString}}(\textcolor{keywordtype}{int}\ client\_sock,\ \textcolor{keyword}{const}\ std::string\&\ msg);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classServer_a09b1ec19b18d9f116cef45fb17c804ad}{calculateSum}}(\textcolor{keywordtype}{double}*\ arr,\ \textcolor{keywordtype}{int}\ size);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a4a9fb5830e81be05f60126c22b5850d6}{printUsage}}();}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classServer_ad5ec9462b520e59f7ea831e157ee5e59}{Server}}();}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{classServer_a4b3aa2579cb1c8cd1d069582c14d0fa6}{\string~Server}}();}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classServer_a23aec41b3e33bc9958303828272cbd01}{parseArgs}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a7eac07d2582fa01c2671362efa955b31}{start}}();}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classServer_a07c45a7e101a3926d8f9685c3c5d14e4}{stop}}();}
+\DoxyCodeLine{00140\ \};}
+
+\end{DoxyCode}

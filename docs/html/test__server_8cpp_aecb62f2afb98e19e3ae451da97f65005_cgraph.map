@@ -1,0 +1,8 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" id="Node000002" href="$classAuth.html#a5fe9a8753164a3493bf0036f117ef5c7" title="Вычисляет хеш SHA&#45;1 от соединения соли и пароля." alt="" coords="287,5,437,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,15,273,15,273,21,60,21"/>
+<area shape="rect" id="Node000003" href="$classAuth.html#ae6caf40df199d015ab956efcd136c381" title="Проверяет корректность хеша." alt="" coords="108,31,239,56"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,20,95,26,94,32,60,26"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="238,32,273,27,273,33,239,37"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="auth.h" name="auth.h">
+<area shape="rect" id="Node000001" title="Заголовочный файл модуля аутентификации." alt="" coords="115,5,177,31"/>
+<area shape="rect" id="Node000002" href="$auth_8cpp.html" title="Реализация модуля аутентификации." alt="" coords="5,79,84,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,41,63,81,60,76,117,36"/>
+<area shape="rect" id="Node000003" href="$server_8h.html" title="Заголовочный файл основного класса сервера." alt="" coords="109,79,183,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,44,149,79,143,79,143,44"/>
+<area shape="rect" id="Node000006" href="$test__server_8cpp.html" title=" " alt="" coords="208,79,329,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="179,35,250,76,247,81,176,40"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html" title="Точка входа в программу сервера." alt="" coords="49,152,131,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="130,117,101,154,97,150,126,113"/>
+<area shape="rect" id="Node000005" href="$server_8cpp.html" title="Реализация основного класса сервера." alt="" coords="156,152,245,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="165,113,194,150,190,154,161,117"/>
+</map>

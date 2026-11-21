@@ -1,0 +1,462 @@
+\doxysection{Server Class Reference}
+\hypertarget{classServer}{}\label{classServer}\index{Server@{Server}}
+
+
+Основной класс TCP-\/сервера.  
+
+
+
+
+{\ttfamily \#include $<$server.\+h$>$}
+
+
+
+Collaboration diagram for Server\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classServer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classServer_ad5ec9462b520e59f7ea831e157ee5e59}{Server}} ()
+\begin{DoxyCompactList}\small\item\em Конструктор сервера. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classServer_a4b3aa2579cb1c8cd1d069582c14d0fa6}{\texorpdfstring{$\sim$}{\string~}\+Server}} ()
+\begin{DoxyCompactList}\small\item\em Деструктор сервера. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_a23aec41b3e33bc9958303828272cbd01}{parse\+Args}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Разбирает параметры командной строки. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a7eac07d2582fa01c2671362efa955b31}{start}} ()
+\begin{DoxyCompactList}\small\item\em Запускает сервер. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a07c45a7e101a3926d8f9685c3c5d14e4}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Останавливает сервер. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classServer_a6e2876951e2574c1711bead30d7216f3}{write\+Log}} (const std\+::string \&msg)
+\begin{DoxyCompactList}\small\item\em Записывает сообщение в консоль и лог-\/файл. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a93eb4c2a422816205dd26bb1c2a15779}{load\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Загружает базу пользователей из файла. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a4fc6ed33ec06bc6d07dc3c15703d9a59}{create\+Default\+Database}} ()
+\begin{DoxyCompactList}\small\item\em Создает файл базы данных по умолчанию. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classServer_afa9afc12945fa23f6296b5cbdfc5d60e}{recv\+String}} (int client\+\_\+sock)
+\begin{DoxyCompactList}\small\item\em Принимает строку от клиента. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a42232945f6d50564729ca791303233ab}{send\+String}} (int client\+\_\+sock, const std\+::string \&msg)
+\begin{DoxyCompactList}\small\item\em Отправляет строку клиенту. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classServer_a09b1ec19b18d9f116cef45fb17c804ad}{calculate\+Sum}} (double \texorpdfstring{$\ast$}{*}arr, int size)
+\begin{DoxyCompactList}\small\item\em Вычисляет сумму элементов вектора. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_a4a9fb5830e81be05f60126c22b5850d6}{print\+Usage}} ()
+\begin{DoxyCompactList}\small\item\em Выводит справку по использованию программы. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structParams}{Params}} \mbox{\hyperlink{classServer_a6e730a027edd3122ad86752e0932f65a}{params}}
+\begin{DoxyCompactList}\small\item\em Параметры сервера. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classAuth}{Auth}} \mbox{\hyperlink{classServer_ac3c32465fc995e2da0c39b2e8dce5413}{auth}}
+\begin{DoxyCompactList}\small\item\em Объект для работы с аутентификацией. \end{DoxyCompactList}\item 
+std\+::map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{classServer_a1f569e7330c9a2d3fc6b90ae9e241d48}{db}}
+\begin{DoxyCompactList}\small\item\em База пользователей (логин\+:пароль). \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_a597fe0c56c29950a94d078d362fed51a}{server\+\_\+socket}}
+\begin{DoxyCompactList}\small\item\em Дескриптор слушающего сокета. \end{DoxyCompactList}\item 
+std\+::ofstream \mbox{\hyperlink{classServer_af67e2448a4f053adca0b4d75986dd194}{log\+\_\+file}}
+\begin{DoxyCompactList}\small\item\em Файловый поток для записи логов. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_aef65436a83f29e10214d13ab96792543}{is\+Running}}
+\begin{DoxyCompactList}\small\item\em Флаг работы сервера. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_a7b953622ed4ad53bed8ef64ffc720842}{is\+Overflow}}
+\begin{DoxyCompactList}\small\item\em Флаг переполнения при вычислении суммы. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Основной класс TCP-\/сервера. 
+
+Реализует логику приема соединений, аутентификации клиентов и обработки запросов на вычисление суммы векторов. Сервер работает в цикле, принимая подключения и обрабатывая их последовательно.
+
+Протокол работы\+:
+\begin{DoxyEnumerate}
+\item Клиент отправляет логин
+\item Сервер генерирует соль и отправляет клиенту
+\item Клиент вычисляет хеш от соли и пароля, отправляет серверу
+\item Сервер проверяет хеш и отправляет OK или ERR
+\item При успехе клиент отправляет векторы, сервер возвращает суммы 
+\end{DoxyEnumerate}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classServer_ad5ec9462b520e59f7ea831e157ee5e59}\label{classServer_ad5ec9462b520e59f7ea831e157ee5e59} 
+\index{Server@{Server}!Server@{Server}}
+\index{Server@{Server}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{Server()}{Server()}}
+{\footnotesize\ttfamily Server\+::\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Конструктор сервера. 
+
+Инициализирует параметры по умолчанию и регистрирует сервер как глобальный. \Hypertarget{classServer_a4b3aa2579cb1c8cd1d069582c14d0fa6}\label{classServer_a4b3aa2579cb1c8cd1d069582c14d0fa6} 
+\index{Server@{Server}!````~Server@{\texorpdfstring{$\sim$}{\string~}Server}}
+\index{````~Server@{\texorpdfstring{$\sim$}{\string~}Server}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Server()}{\string~Server()}}
+{\footnotesize\ttfamily Server\+::\texorpdfstring{$\sim$}{\string~}\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Деструктор сервера. 
+
+Закрывает сокет и файл логов. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classServer_a09b1ec19b18d9f116cef45fb17c804ad}\label{classServer_a09b1ec19b18d9f116cef45fb17c804ad} 
+\index{Server@{Server}!calculateSum@{calculateSum}}
+\index{calculateSum@{calculateSum}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{calculateSum()}{calculateSum()}}
+{\footnotesize\ttfamily double Server\+::calculate\+Sum (\begin{DoxyParamCaption}\item[{double \texorpdfstring{$\ast$}{*}}]{arr,  }\item[{int}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Вычисляет сумму элементов вектора. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arr} & Указатель на массив чисел. \\
+\hline
+{\em size} & Размер массива. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Сумма элементов.
+\end{DoxyReturn}
+При переполнении возвращает бесконечность и устанавливает флаг is\+Overflow. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a09b1ec19b18d9f116cef45fb17c804ad_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a4fc6ed33ec06bc6d07dc3c15703d9a59}\label{classServer_a4fc6ed33ec06bc6d07dc3c15703d9a59} 
+\index{Server@{Server}!createDefaultDatabase@{createDefaultDatabase}}
+\index{createDefaultDatabase@{createDefaultDatabase}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{createDefaultDatabase()}{createDefaultDatabase()}}
+{\footnotesize\ttfamily void Server\+::create\+Default\+Database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Создает файл базы данных по умолчанию. 
+
+Записывает тестовых пользователей\+: user\+:P@ss\+W0rd и ibst128\+:Sup\+ErP\$\$w0rd. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a4fc6ed33ec06bc6d07dc3c15703d9a59_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a93eb4c2a422816205dd26bb1c2a15779}\label{classServer_a93eb4c2a422816205dd26bb1c2a15779} 
+\index{Server@{Server}!loadDatabase@{loadDatabase}}
+\index{loadDatabase@{loadDatabase}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{loadDatabase()}{loadDatabase()}}
+{\footnotesize\ttfamily void Server\+::load\+Database (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Загружает базу пользователей из файла. 
+
+Читает файл формата "{}логин\+:пароль"{} построчно. Если файл не существует, создает файл по умолчанию. 
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::runtime\+\_\+error} & Если файл не может быть открыт или создан. \\
+\hline
+\end{DoxyExceptions}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a93eb4c2a422816205dd26bb1c2a15779_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a93eb4c2a422816205dd26bb1c2a15779_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a23aec41b3e33bc9958303828272cbd01}\label{classServer_a23aec41b3e33bc9958303828272cbd01} 
+\index{Server@{Server}!parseArgs@{parseArgs}}
+\index{parseArgs@{parseArgs}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{parseArgs()}{parseArgs()}}
+{\footnotesize\ttfamily bool Server\+::parse\+Args (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Разбирает параметры командной строки. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Количество аргументов. \\
+\hline
+{\em argv} & Массив аргументов. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true Если параметры корректны и сервер должен запуститься. 
+
+false Если запрошен вывод справки.
+\end{DoxyReturn}
+Поддерживаемые параметры\+:
+\begin{DoxyItemize}
+\item -\/h, --help\+: вывод справки
+\item -\/d, --db-\/file\+: путь к файлу базы
+\item -\/l, --log-\/file\+: путь к файлу логов
+\item -\/p, --port\+: номер порта 
+\end{DoxyItemize}Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{classServer_a23aec41b3e33bc9958303828272cbd01_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classServer_a23aec41b3e33bc9958303828272cbd01_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a4a9fb5830e81be05f60126c22b5850d6}\label{classServer_a4a9fb5830e81be05f60126c22b5850d6} 
+\index{Server@{Server}!printUsage@{printUsage}}
+\index{printUsage@{printUsage}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{printUsage()}{printUsage()}}
+{\footnotesize\ttfamily void Server\+::print\+Usage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Выводит справку по использованию программы. 
+
+Показывает доступные параметры командной строки. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a4a9fb5830e81be05f60126c22b5850d6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_afa9afc12945fa23f6296b5cbdfc5d60e}\label{classServer_afa9afc12945fa23f6296b5cbdfc5d60e} 
+\index{Server@{Server}!recvString@{recvString}}
+\index{recvString@{recvString}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{recvString()}{recvString()}}
+{\footnotesize\ttfamily std\+::string Server\+::recv\+String (\begin{DoxyParamCaption}\item[{int}]{client\+\_\+sock }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Принимает строку от клиента. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+sock} & Дескриптор сокета клиента. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string Принятая строка. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::runtime\+\_\+error} & Если клиент отключился. \\
+\hline
+\end{DoxyExceptions}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_afa9afc12945fa23f6296b5cbdfc5d60e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a42232945f6d50564729ca791303233ab}\label{classServer_a42232945f6d50564729ca791303233ab} 
+\index{Server@{Server}!sendString@{sendString}}
+\index{sendString@{sendString}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{sendString()}{sendString()}}
+{\footnotesize\ttfamily void Server\+::send\+String (\begin{DoxyParamCaption}\item[{int}]{client\+\_\+sock,  }\item[{const std\+::string \&}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Отправляет строку клиенту. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+sock} & Дескриптор сокета клиента. \\
+\hline
+{\em msg} & Строка для отправки. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a42232945f6d50564729ca791303233ab_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a7eac07d2582fa01c2671362efa955b31}\label{classServer_a7eac07d2582fa01c2671362efa955b31} 
+\index{Server@{Server}!start@{start}}
+\index{start@{start}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Server\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Запускает сервер. 
+
+Создает сокет, привязывает к порту, начинает прослушивание и входит в цикл приема соединений. 
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::runtime\+\_\+error} & При ошибках создания сокета или привязки. \\
+\hline
+\end{DoxyExceptions}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a7eac07d2582fa01c2671362efa955b31_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classServer_a7eac07d2582fa01c2671362efa955b31_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a07c45a7e101a3926d8f9685c3c5d14e4}\label{classServer_a07c45a7e101a3926d8f9685c3c5d14e4} 
+\index{Server@{Server}!stop@{stop}}
+\index{stop@{stop}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Server\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Останавливает сервер. 
+
+Устанавливает флаг is\+Running в false и закрывает сокет. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{classServer_a07c45a7e101a3926d8f9685c3c5d14e4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a07c45a7e101a3926d8f9685c3c5d14e4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classServer_a6e2876951e2574c1711bead30d7216f3}\label{classServer_a6e2876951e2574c1711bead30d7216f3} 
+\index{Server@{Server}!writeLog@{writeLog}}
+\index{writeLog@{writeLog}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{writeLog()}{writeLog()}}
+{\footnotesize\ttfamily void Server\+::write\+Log (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Записывает сообщение в консоль и лог-\/файл. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & Текст сообщения для записи. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classServer_a6e2876951e2574c1711bead30d7216f3_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classServer_ac3c32465fc995e2da0c39b2e8dce5413}\label{classServer_ac3c32465fc995e2da0c39b2e8dce5413} 
+\index{Server@{Server}!auth@{auth}}
+\index{auth@{auth}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{auth}{auth}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAuth}{Auth}} Server\+::auth\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Объект для работы с аутентификацией. 
+
+\Hypertarget{classServer_a1f569e7330c9a2d3fc6b90ae9e241d48}\label{classServer_a1f569e7330c9a2d3fc6b90ae9e241d48} 
+\index{Server@{Server}!db@{db}}
+\index{db@{db}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{db}{db}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, std\+::string$>$ Server\+::db\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+База пользователей (логин\+:пароль). 
+
+\Hypertarget{classServer_a7b953622ed4ad53bed8ef64ffc720842}\label{classServer_a7b953622ed4ad53bed8ef64ffc720842} 
+\index{Server@{Server}!isOverflow@{isOverflow}}
+\index{isOverflow@{isOverflow}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{isOverflow}{isOverflow}}
+{\footnotesize\ttfamily bool Server\+::is\+Overflow\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Флаг переполнения при вычислении суммы. 
+
+\Hypertarget{classServer_aef65436a83f29e10214d13ab96792543}\label{classServer_aef65436a83f29e10214d13ab96792543} 
+\index{Server@{Server}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{isRunning}{isRunning}}
+{\footnotesize\ttfamily bool Server\+::is\+Running\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Флаг работы сервера. 
+
+\Hypertarget{classServer_af67e2448a4f053adca0b4d75986dd194}\label{classServer_af67e2448a4f053adca0b4d75986dd194} 
+\index{Server@{Server}!log\_file@{log\_file}}
+\index{log\_file@{log\_file}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{log\_file}{log\_file}}
+{\footnotesize\ttfamily std\+::ofstream Server\+::log\+\_\+file\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Файловый поток для записи логов. 
+
+\Hypertarget{classServer_a6e730a027edd3122ad86752e0932f65a}\label{classServer_a6e730a027edd3122ad86752e0932f65a} 
+\index{Server@{Server}!params@{params}}
+\index{params@{params}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{params}{params}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structParams}{Params}} Server\+::params\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Параметры сервера. 
+
+\Hypertarget{classServer_a597fe0c56c29950a94d078d362fed51a}\label{classServer_a597fe0c56c29950a94d078d362fed51a} 
+\index{Server@{Server}!server\_socket@{server\_socket}}
+\index{server\_socket@{server\_socket}!Server@{Server}}
+\doxysubsubsection{\texorpdfstring{server\_socket}{server\_socket}}
+{\footnotesize\ttfamily int Server\+::server\+\_\+socket\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Дескриптор слушающего сокета. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{server_8h}{server.\+h}}\item 
+\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}

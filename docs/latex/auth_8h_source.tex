@@ -1,0 +1,16 @@
+\doxysection{auth.\+h}
+\hypertarget{auth_8h_source}{}\label{auth_8h_source}\mbox{\hyperlink{auth_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAuth}{Auth}}\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ std::string\ \mbox{\hyperlink{classAuth_a0366a2d4069b0496a8a5b131f0be7df1}{generateSalt}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00042\ \ \ \ \ std::string\ \mbox{\hyperlink{classAuth_a5fe9a8753164a3493bf0036f117ef5c7}{computeHash}}(\textcolor{keyword}{const}\ std::string\&\ salt,\ \textcolor{keyword}{const}\ std::string\&\ password);}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classAuth_ae6caf40df199d015ab956efcd136c381}{verifyHash}}(\textcolor{keyword}{const}\ std::string\&\ hash,\ \textcolor{keyword}{const}\ std::string\&\ salt,\ \textcolor{keyword}{const}\ std::string\&\ password);}
+\DoxyCodeLine{00055\ \};}
+
+\end{DoxyCode}

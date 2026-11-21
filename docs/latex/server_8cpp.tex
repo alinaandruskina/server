@@ -1,0 +1,74 @@
+\doxysection{server.\+cpp File Reference}
+\hypertarget{server_8cpp}{}\label{server_8cpp}\index{server.cpp@{server.cpp}}
+
+
+Реализация основного класса сервера.  
+
+
+{\ttfamily \#include "{}server.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+Include dependency graph for server.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{server_8cpp_a8ee3282bc313e547dbbb8d4f4010db61}{signal\+Handler}} (int signum)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classServer}{Server}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{server_8cpp_abbe87684152937f96438a397c6b9746f}{global\+\_\+server}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Реализация основного класса сервера. 
+
+Содержит методы класса \doxylink{classServer}{Server} для работы с сетью, базой данных и вычислениями. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{server_8cpp_a8ee3282bc313e547dbbb8d4f4010db61}\label{server_8cpp_a8ee3282bc313e547dbbb8d4f4010db61} 
+\index{server.cpp@{server.cpp}!signalHandler@{signalHandler}}
+\index{signalHandler@{signalHandler}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{signalHandler()}{signalHandler()}}
+{\footnotesize\ttfamily void signal\+Handler (\begin{DoxyParamCaption}\item[{int}]{signum }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8cpp_a8ee3282bc313e547dbbb8d4f4010db61_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8cpp_a8ee3282bc313e547dbbb8d4f4010db61_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{server_8cpp_abbe87684152937f96438a397c6b9746f}\label{server_8cpp_abbe87684152937f96438a397c6b9746f} 
+\index{server.cpp@{server.cpp}!global\_server@{global\_server}}
+\index{global\_server@{global\_server}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{global\_server}{global\_server}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classServer}{Server}}\texorpdfstring{$\ast$}{*} global\+\_\+server = nullptr}
+
