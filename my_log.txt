@@ -1,3 +1,5 @@
 log: Select variant double:SHA1:server
 log: digest size: 20
 log: Server stopped by signal 2
+log: Select variant double:SHA1:server
+log: digest size: 20
