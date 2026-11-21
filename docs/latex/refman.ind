@@ -1,0 +1,156 @@
+\begin{theindex}
+
+  \item {\texorpdfstring{$\sim$}{\string~}Server}
+    \subitem {Server}, \hyperpage{15}
+  \item {\texorpdfstring{$\sim$}{\string~}TestLogger}
+    \subitem {TestLogger}, \hyperpage{23}
+
+  \indexspace
+
+  \item {Auth}, \hyperpage{7}
+    \subitem {computeHash}, \hyperpage{8}
+    \subitem {generateSalt}, \hyperpage{9}
+    \subitem {verifyHash}, \hyperpage{10}
+  \item {auth}
+    \subitem {Server}, \hyperpage{21}
+  \item {auth.cpp}, \hyperpage{25}
+  \item {auth.h}, \hyperpage{26}
+  \item {auth\_file}
+    \subitem {Params}, \hyperpage{12}
+
+  \indexspace
+
+  \item {calculateSum}
+    \subitem {Server}, \hyperpage{15}
+  \item {computeHash}
+    \subitem {Auth}, \hyperpage{8}
+  \item {createDefaultDatabase}
+    \subitem {Server}, \hyperpage{16}
+
+  \indexspace
+
+  \item {db}
+    \subitem {Server}, \hyperpage{21}
+
+  \indexspace
+
+  \item {generateSalt}
+    \subitem {Auth}, \hyperpage{9}
+  \item {global\_server}
+    \subitem {server.cpp}, \hyperpage{30}
+
+  \indexspace
+
+  \item {isOverflow}
+    \subitem {Server}, \hyperpage{21}
+  \item {isRunning}
+    \subitem {Server}, \hyperpage{21}
+
+  \indexspace
+
+  \item {loadDatabase}
+    \subitem {Server}, \hyperpage{16}
+  \item {log\_file}
+    \subitem {Params}, \hyperpage{12}
+    \subitem {Server}, \hyperpage{22}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{28}
+    \subitem {test\_server.cpp}, \hyperpage{34}
+  \item {main.cpp}, \hyperpage{27}
+    \subitem {main}, \hyperpage{28}
+
+  \indexspace
+
+  \item {name}
+    \subitem {TestLogger}, \hyperpage{23}
+
+  \indexspace
+
+  \item {Params}, \hyperpage{12}
+    \subitem {auth\_file}, \hyperpage{12}
+    \subitem {log\_file}, \hyperpage{12}
+    \subitem {port}, \hyperpage{12}
+  \item {params}
+    \subitem {Server}, \hyperpage{22}
+  \item {parseArgs}
+    \subitem {Server}, \hyperpage{17}
+  \item {port}
+    \subitem {Params}, \hyperpage{12}
+  \item {printUsage}
+    \subitem {Server}, \hyperpage{18}
+
+  \indexspace
+
+  \item {README.md}, \hyperpage{29}
+  \item {recvString}
+    \subitem {Server}, \hyperpage{18}
+
+  \indexspace
+
+  \item {sendString}
+    \subitem {Server}, \hyperpage{19}
+  \item {Server}, \hyperpage{13}
+    \subitem {\texorpdfstring{$\sim$}{\string~}Server}, \hyperpage{15}
+    \subitem {auth}, \hyperpage{21}
+    \subitem {calculateSum}, \hyperpage{15}
+    \subitem {createDefaultDatabase}, \hyperpage{16}
+    \subitem {db}, \hyperpage{21}
+    \subitem {isOverflow}, \hyperpage{21}
+    \subitem {isRunning}, \hyperpage{21}
+    \subitem {loadDatabase}, \hyperpage{16}
+    \subitem {log\_file}, \hyperpage{22}
+    \subitem {params}, \hyperpage{22}
+    \subitem {parseArgs}, \hyperpage{17}
+    \subitem {printUsage}, \hyperpage{18}
+    \subitem {recvString}, \hyperpage{18}
+    \subitem {sendString}, \hyperpage{19}
+    \subitem {Server}, \hyperpage{15}
+    \subitem {server\_socket}, \hyperpage{22}
+    \subitem {start}, \hyperpage{19}
+    \subitem {stop}, \hyperpage{20}
+    \subitem {writeLog}, \hyperpage{21}
+  \item {server.cpp}, \hyperpage{29}
+    \subitem {global\_server}, \hyperpage{30}
+    \subitem {signalHandler}, \hyperpage{30}
+  \item {server.h}, \hyperpage{31}
+  \item {server\_socket}
+    \subitem {Server}, \hyperpage{22}
+  \item {signalHandler}
+    \subitem {server.cpp}, \hyperpage{30}
+  \item {start}
+    \subitem {Server}, \hyperpage{19}
+  \item {stop}
+    \subitem {Server}, \hyperpage{20}
+
+  \indexspace
+
+  \item {TEST}
+    \subitem {test\_server.cpp}, \hyperpage{34--41}
+  \item {test\_server.cpp}, \hyperpage{32}
+    \subitem {main}, \hyperpage{34}
+    \subitem {TEST}, \hyperpage{34--41}
+  \item {TestLogger}, \hyperpage{22}
+    \subitem {\texorpdfstring{$\sim$}{\string~}TestLogger}, 
+		\hyperpage{23}
+    \subitem {name}, \hyperpage{23}
+    \subitem {TestLogger}, \hyperpage{23}
+
+  \indexspace
+
+  \item {verifyHash}
+    \subitem {Auth}, \hyperpage{10}
+
+  \indexspace
+
+  \item {writeLog}
+    \subitem {Server}, \hyperpage{21}
+
+  \indexspace
+
+  \item {Курсовая работа: Разработка серверной программы}, 
+		\hyperpage{1}
+
+\end{theindex}

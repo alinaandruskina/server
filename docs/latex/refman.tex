@@ -1,7 +1,7 @@
   % Handle batch mode
   % to overcome problems with too many open files
   \let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}
-  \pdfminorversion=7
+  %\pdfminorversion=7
   % Set document class depending on configuration
   \documentclass[twoside]{book}
   %% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
@@ -35,6 +35,7 @@
   % Define default fonts
   % Font selection
   \usepackage[T1]{fontenc}
+  \usepackage[russian]{babel}
   % set main and monospaced font
   \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
