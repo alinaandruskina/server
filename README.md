@@ -17,7 +17,7 @@ chmod +x server_static
 
 Вывод справки:
 ./vcalc_server -h, ./vcalc_server --help, ./vcalc_server
-
+./vcalc_server
 Тестирование рабочих параметров:
 ./vcalc_server --run -p 4444
 
@@ -30,5 +30,11 @@ chmod +x server_static
 комбинация параметров: 
 ./vcalc_server --run -p 33333 -d clients.conf
 
+Функциональное тестирование
+
+Тест 1:Вывод справки при  запуске без параметров
+./vcalc_server
+Тест 2: Вывод справки при параметре -h
+./vcalc_server -h
 
 
