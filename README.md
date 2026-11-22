@@ -32,64 +32,82 @@ chmod +x server_static
 
 Функциональное тестирование
 
-Тест 1:Вывод справки при  запуске без параметров
-./vcalc_server
-Тест 2: Вывод справки при параметре -h
-./vcalc_server -h
-Тест 3: Запуск сервера с параметрами по умолчанию
-rm -f clients.conf server.log
-./vcalc_server --run &
-Тест 4. Обработка неизвестного параметра
-./vcalc_server --unknown_param
-Тест 5. Запуск с пользовательской базой данных
+Запуск
+С параметрами по умолчанию (порт 33333, clients.conf, server.log)
 ./vcalc_server --run
-Тест 6. Запуск с пользовательским лог-файлом
-pkill vcalc_server
-cd ~/server_project
-echo "user:P@ssW0rd" > clients.conf
 
-# Запуск с указанием своего лог-файла my_log.txt
-./vcalc_server --run -d clients.conf -l my_log.txt &
+С указанием параметров
+./vcalc_server --run -p 4444 -d my_base.conf -l my_log.txt
+
+Функциональное тестирование
+Тест 1. Вывод справки без параметров
+./vcalc_server
+
+Тест 2. Вывод справки с -h
+./vcalc_server -h
+
+Тест 3. Неизвестный параметр
+./vcalc_server --unknown_param
+
+Тест 4. Запуск с параметрами по умолчанию
+pkill vcalc_server 2>/dev/null
+./vcalc_server --run &
 SERVER_PID=$!
-echo "Сервер запущен, PID: $SERVER_PID"
+sleep 2
+ps -p $SERVER_PID
+ss -tlnp | grep 33333
+cat server.log
+kill $SERVER_PID
+
+Тест 5. Запуск с пользовательской базой
+echo "user:123" > my_base.conf
+./vcalc_server --run -d my_base.conf -p 44444 &
+SERVER_PID=$!
+sleep 2
+ps -p $SERVER_PID
+ss -tlnp | grep 44444
+kill $SERVER_PID
+
+Тест 6. Запуск с пользовательским логом
+./vcalc_server --run -l my_log.txt -p 44444 &
+SERVER_PID=$!
 sleep 2
 ls -la my_log.txt
 cat my_log.txt
-Тест 7. Комбинация параметров
-# Создание базы
-echo "user:testpass" > clients.conf
+kill $SERVER_PID
 
-# Запуск с комбинацией параметров
+Тест 7. Комбинация параметров
+echo "user:testpass" > clients.conf
 ./vcalc_server --run -p 33333 -d clients.conf -l server.log &
 SERVER_PID=$!
 sleep 2
-
-# Проверка
 ps -p $SERVER_PID
-netstat -tlnp | grep 33333
+ss -tlnp | grep 33333
 cat server.log
-
-# Остановка
 kill $SERVER_PID
-Тест 8. Тест устойчивости (10 подключений)
-# Запуск сервера
-./vcalc_server --run -p 33333 -d test_clients.conf -l stability_test.log &
+
+Тест 8. Полный цикл работы 
+Терминал 1:
+echo "user:P@ssW0rd" > clients.conf
+./vcalc_server --run -p 33333 -d clients.conf -l server.log
+Терминал 2:
+./client_double -H SHA1 -S server
+
+Тест 9. Тест устойчивости (10 подключений)
+./vcalc_server --run -p 33333 -d clients.conf -l stability_test.log &
 SERVER_PID=$!
 sleep 2
-
-# 10 последовательных подключений через netcat
 for i in {1..10}; do
-    echo "test" | nc -q 1 127.0.0.1 33333 > /dev/null 2>&1
-    echo "Подключение #$i завершено"
+    echo "--- Подключение #$i ---"
+    ./client_double -H SHA1 -S server
 done
-
-# Проверка, что сервер все еще работает
 ps -p $SERVER_PID
-
-# Просмотр лога
 cat stability_test.log
-
-# Остановка
 kill $SERVER_PID
 
-
+Тест 10. Ошибка аутентификации
+Терминал 1:
+echo "user:wrong_password" > wrong_db.conf
+./vcalc_server --run -p 33333 -d wrong_db.conf
+Терминал 2:
+./client_double -H SHA1 -S server
